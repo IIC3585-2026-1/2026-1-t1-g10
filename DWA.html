@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anidacion CSS, Variables y Funciones Demo</title>
+  <style>
+    /* =========================
+       CSS VARIABLES
+       ========================= */
+    :root {
+      --hue: 220;
+      --sat: 75%;
+      --light: 52%;
+
+      --bg: hsl(var(--hue), 30%, 96%);
+      --surface: white;
+      --text: hsl(var(--hue), 20%, 18%);
+      --muted: hsl(var(--hue), 12%, 42%);
+      --primary: hsl(var(--hue), var(--sat), var(--light));
+      --primary-soft: hsl(var(--hue), 85%, 92%);
+      --border: hsl(var(--hue), 18%, 84%);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+      --radius: 18px;
+      --space: 20px;
+      --title-size: clamp(1.8rem, 4vw, 3rem);
+      --card-width: min(700px, 92%);
+    }
+
+    body.dark {
+      --bg: hsl(var(--hue), 22%, 10%);
+      --surface: hsl(var(--hue), 18%, 15%);
+      --text: hsl(var(--hue), 18%, 92%);
+      --muted: hsl(var(--hue), 12%, 72%);
+      --primary-soft: hsl(var(--hue), 45%, 20%);
+      --border: hsl(var(--hue), 12%, 28%);
+      --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    /* =========================
+       BASE
+       ========================= */
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: calc(var(--space) * 1.5);
+    }
+
+    .page {
+      width: min(1100px, 100%);
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: var(--title-size);
+      line-height: 1.05;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 800px;
+    }
+
+    .controls {
+      width: var(--card-width);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: var(--space);
+      margin-bottom: 24px;
+    }
+
+    .controls h2 {
+      margin-top: 0;
+      margin-bottom: 14px;
+      font-size: 1.1rem;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 180px;
+    }
+
+    .control-group label {
+      font-weight: bold;
+    }
+
+    input[type="range"] {
+      width: 220px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 12px 18px;
+      background: var(--primary);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      opacity: 0.95;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* =========================
+       NESTING DEMO
+       Native CSS nesting
+       ========================= */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: calc(var(--space) + 4px);
+      transition: background 0.25s ease, border-color 0.25s ease;
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 10px;
+        color: var(--primary);
+        font-size: 1.25rem;
+      }
+
+      p {
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: var(--primary-soft);
+        color: var(--primary);
+        font-size: 0.85rem;
+        font-weight: bold;
+      }
+
+      ul {
+        padding-left: 20px;
+        color: var(--text);
+
+        li {
+          margin-bottom: 8px;
+        }
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    .demo-panel {
+      width: var(--card-width);
+      background: linear-gradient(
+        135deg,
+        var(--primary-soft),
+        var(--surface)
+      );
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: calc(var(--space) * 1.2);
+      margin-top: 24px;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .demo-panel h2 {
+      margin-top: 0;
+      color: var(--primary);
+    }
+
+    .sample-button {
+      margin-top: 10px;
+      background: var(--primary);
+    }
+
+    .code-note {
+      width: var(--card-width);
+      margin-top: 24px;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+      padding: var(--space);
+      color: var(--muted);
+    }
+
+    code {
+      background: var(--primary-soft);
+      padding: 2px 6px;
+      border-radius: 8px;
+      color: var(--text);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <h1>CSS anidado, Variables y Funciones</h1>
+      <p>
+        Esta página demuestra tres conceptos:
+        <strong>CSS anidado</strong>,
+        <strong>CSS variables</strong>, y
+        <strong>CSS funciones</strong>.
+        Use los controles a continuación para experimentar con los colores. 
+      </p>
+    </section>
+
+    <section class="controls">
+      <h2>Controles interactivos</h2>
+      <div class="controls-row">
+        <div class="control-group">
+          <label for="hueSlider">Color principal</label>
+          <input id="hueSlider" type="range" min="0" max="360" value="220" />
+        </div>
+
+        <div class="control-group">
+          <label for="lightSlider">Luminosidad del color principal</label>
+          <input id="lightSlider" type="range" min="30" max="70" value="52" />
+        </div>
+
+        <div class="control-group">
+          <label>Tema</label>
+          <button id="themeButton" type="button">Modo oscuro</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Anidado</h3>
+        <p>
+          Esta tarjeta usa <strong>reglas anidadas</strong>. Adentro de esta
+          <code>.card</code>, los estilos para <code>h3</code>, <code>p</code>, <code>ul</code>, y <code>.badge</code> están anidados dentro del bloque de la tarjeta.
+        </p>
+        <ul>
+          <li>Las reglas permanecen agrupadas.</li>
+          <li>La estructura es más fácil de leer.</li>
+          <li>La relación entre padre e hijo es más clara.</li>
+        </ul>
+        <span class="badge">Ejemplo de anidamiento</span>
+      </article>
+
+      <article class="card">
+        <h3>Variables</h3>
+        <p>
+          Los colores de la página dependen de variables como
+          <code>--primary</code>, <code>--bg</code>, y <code>--text</code>.
+          Cambiar una variable actualiza muchas partes del diseño al mismo tiempo.
+        </p>
+        <ul>
+          <li>Cambios globales de color sencillos</li>
+          <li>Más consistencia a través de los componentes</li>
+          <li>Menos repetición en CSS</li>
+        </ul>
+        <span class="badge">Propiedades personalizadas</span>
+      </article>
+
+      <article class="card">
+        <h3>Funciones</h3>
+        <p>
+          Esta página usa funciones CSS como <code>var()</code>,
+          <code>hsl()</code>, <code>calc()</code>, <code>min()</code>, y
+          <code>clamp()</code>.
+        </p>
+        <ul>
+          <li><code>var()</code> lee las variables CSS</li>
+          <li><code>hsl()</code> genera colores</li>
+          <li><code>calc()</code> calcula el espaciado</li>
+          <li><code>clamp()</code> hace que el texto sea responsive</li>
+        </ul>
+        <span class="badge">CSS dinamico</span>
+      </article>
+    </section>
+
+    <section class="demo-panel">
+      <h2>Cambio de color en vivo</h2>
+      <p>
+        Mueva los controles deslizantes de arriba. JavaScript solo actualiza los valores de
+        las variables CSS, mientras que CSS maneja los cambios visuales.
+      </p>
+      <button class="sample-button" type="button">Botón de ejemplo</button>
+      <p class="footer-note"> 
+        Esto es util porque mantiene la lógica de estilo dentro de CSS, lo que hace que el código sea más limpio y fácil de mantener.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const hueSlider = document.getElementById("hueSlider");
+    const lightSlider = document.getElementById("lightSlider");
+    const themeButton = document.getElementById("themeButton");
+
+    function updateColors() {
+      document.documentElement.style.setProperty("--hue", hueSlider.value);
+      document.documentElement.style.setProperty("--light", lightSlider.value + "%");
+    }
+
+    hueSlider.addEventListener("input", updateColors);
+    lightSlider.addEventListener("input", updateColors);
+
+    themeButton.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+
+    updateColors();
+  </script>
+</body>
+</html>
