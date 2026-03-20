@@ -1,1 +1,3 @@
 # 2026-1-t1-g10
+
+La anidación se aprecia en la sección de las tarjetas, donde dentro de .card se definen estilos para elementos como h3, p, ul y .badge, mostrando cómo se agrupan reglas relacionadas. Las variables CSS se ven en :root, donde se guardan colores, espacios y tamaños reutilizables como --primary, --bg y --radius. Las funciones CSS aparecen en usos como var() para leer variables, hsl() para construir colores, calc() para calcular espaciados, min() para limitar anchos y clamp() para hacer tamaños responsivos. Además, con un poco de JavaScript, los controles cambian las variables en tiempo real, lo que permite ver cómo toda la página se actualiza dinámicamente.
